@@ -1,2 +1,2 @@
 # tutkivirastoja
-tutkivirastoja demovisualisointeja
+R:n shiny ja leaflet paketeilla tuotettuja visualisointeja valtion virastojen henkilöstöstä.
