@@ -8,7 +8,7 @@ library(RColorBrewer)
 library(rgdal)
 library(leafletR)
 
-# Työhakemisto
+# TyÃ¶hakemisto
 setwd("O://R codes and data files/shiny/kuntarajat")
 
 # Karttapohja
@@ -25,25 +25,25 @@ sh.wgs84 <- spTransform(sh, CRS("+init=epsg:4326"))
 #dat<-as.data.frame(read.px("https://pxnet2.stat.fi/PXWeb/Resources/PX/Databases/Kuntien_avainluvut/2017/kuntien_avainluvut_2017_aikasarja.px"))
 #dat<-as.data.frame(read.px("kuntien_avainluvut_2017_aikasarja.px"))
 
-# Ladataan käsin kaikkien kuntien avainluvut vuodelta 2015
+# Ladataan kÃ¤sin kaikkien kuntien avainluvut vuodelta 2015
 #dat<-import("C:\\Users\\lenovo\\Desktop\\Kuntien avainluvut.xlsx")
 
-# Yhdistetään data ja kartta
+# YhdistetÃ¤Ã¤n data ja kartta
 shm<-merge(sh.wgs84, dat, by.x="nimi", by.y="maakunta")
 
 # seuraava vaihe: 
 # 1. luo data, jossa tiedot, jotka haluat visualisoida
-# 1.1 varmista, että datassa on maakunta ja nimi -nimiset sarakkeet
-# 2. yhdistä kartalle kuten alla
+# 1.1 varmista, ettÃ¤ datassa on maakunta ja nimi -nimiset sarakkeet
+# 2. yhdistÃ¤ kartalle kuten alla
 
 # Interaktiivinen kartta
-shm@data$nimi2<-gsub("å", "a", gsub("Å", "a", gsub("ö", "o", gsub("ä", "a", gsub("Ö", "ö", gsub("Ä", "A", shm@data$nimi))))))
+shm@data$nimi2<-gsub("Ã¥", "a", gsub("Ã…", "a", gsub("Ã¶", "o", gsub("Ã¤", "a", gsub("Ã–", "Ã¶", gsub("Ã„", "A", shm@data$nimi))))))
 shm@data$nimi<-shm@data$nimi2
 shm@data$namn<-shm@data$nimi2
 shm@data$name<-shm@data$nimi2
 writeOGR(shm, "shm_geojson", layer='shm', driver="GeoJSON")
 popup <- c("nimi", "euroa")
-shm@data$euroa<-shm@data$"Sosiaali- ja terveystoiminta yhteensä, nettokäyttökustannukset, euroa/asukas"
+shm@data$euroa<-shm@data$"Sosiaali- ja terveystoiminta yhteensÃ¤, nettokÃ¤yttÃ¶kustannukset, euroa/asukas"
 
 cuts <- c(1000, 2000, 3000, 4000, 5000, 6000)
 sty <- styleGrad(prop="euroa",
